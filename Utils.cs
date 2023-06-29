@@ -71,8 +71,10 @@ namespace Packages.MapToolbox
             var target = new GameObject(name ?? typeof(T).Name).AddComponent<T>();
             target.transform.SetParent(component.transform);
             target.transform.position = component.transform.position;
+            Debug.Log("main point " + name + " setted at " + component.transform.position + " | " + component.transform.rotation + " with parent " + component.name);
             return target;
         }
+        // public static string ChildMapId(this Transform transform) => transform.childCount == 0 ? "center" : (transform.childCount + 1).ToString();
         public static string ChildMapId(this Transform transform) => (transform.childCount + 1).ToString();
         public static void SetLocalX(this Transform transform, double x) => transform.SetLocalX((float)x);
         public static void SetLocalY(this Transform transform, double y) => transform.SetLocalY((float)y);
