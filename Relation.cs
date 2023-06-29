@@ -79,6 +79,9 @@ namespace Packages.MapToolbox
                             case "crosswalk":
                                 gameObject.GetComponent<Lanelet>().subType = Lanelet.SubType.crosswalk;
                                 break;
+                            case "tramTrack":
+                                gameObject.GetComponent<Lanelet>().subType = Lanelet.SubType.tramTrack;
+                                break;
                             default:
                                 break;
                         }

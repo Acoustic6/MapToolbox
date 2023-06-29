@@ -29,7 +29,12 @@ namespace Packages.MapToolbox
     [ExecuteInEditMode]
     public class Lanelet2Map : MonoBehaviour
     {
-        private void Awake() => EditorUpdate.Instance.transform.SetAsFirstSibling();
+        private void Awake() 
+        {
+            Debug.Log("1 position: " + EditorUpdate.Instance.transform.position);
+            Debug.Log("1 rotation: " + EditorUpdate.Instance.transform.rotation);
+            EditorUpdate.Instance.transform.SetAsFirstSibling();
+        }
 
         public void Load(string filename)
         {
@@ -103,6 +108,8 @@ namespace Packages.MapToolbox
             Selection.activeObject = go;
         }
         private static GameObject CreateNewGo() => new GameObject(typeof(Lanelet2Map).Name, typeof(Lanelet2Map));
+        internal void AddTramSwitch() => Debug.Log("Добавлена стрелка трамвайных путей");
+
         internal void AddLanelet() => Selection.activeObject = Lanelet.AddNew(this);
         internal void AddTrafficLight() => Selection.activeObject = TrafficLight.AddNew(this);
         internal void AddTrafficSign() => Selection.activeObject = TrafficSign.AddNew(this);
@@ -126,17 +133,13 @@ namespace Packages.MapToolbox
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            if (GUILayout.Button("Save"))
-            {
-                string saveFile = EditorUtility.SaveFilePanel(string.Empty, Application.dataPath, "lanelet2_map", "osm");
-                if (!string.IsNullOrEmpty(saveFile))
-                {
-                    (target as Lanelet2Map).Save(saveFile);
-                }
-            }
             if (GUILayout.Button("Add Lanelet"))
             {
                 (target as Lanelet2Map).AddLanelet();
+            }
+            if (GUILayout.Button("Add Tram Switch"))
+            {
+                (target as Lanelet2Map).AddTramSwitch();
             }
             if (GUILayout.Button("Add TrafficLight"))
             {
@@ -193,6 +196,14 @@ namespace Packages.MapToolbox
             if (GUILayout.Button("Filter PedestrianMarking"))
             {
                 SceneModeUtility.SearchForType(typeof(PedestrianMarking));
+            }
+            if (GUILayout.Button("Save"))
+            {
+                string saveFile = EditorUtility.SaveFilePanel(string.Empty, Application.dataPath, "lanelet2_map", "osm");
+                if (!string.IsNullOrEmpty(saveFile))
+                {
+                    (target as Lanelet2Map).Save(saveFile);
+                }
             }
         }
     }

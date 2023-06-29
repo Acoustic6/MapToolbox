@@ -33,6 +33,7 @@ namespace Packages.MapToolbox
         {
             road,
             crosswalk,
+            tramTrack,
         }
         public SubType subType;
         static Material Material { get; set; }
