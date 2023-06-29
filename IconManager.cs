@@ -60,7 +60,18 @@ namespace Packages.MapToolbox
             {
                 Type type = typeof(EditorGUIUtility);
                 setIconForObjectMethodInfo =
-                    type.GetMethod("SetIconForObject", BindingFlags.Static | BindingFlags.NonPublic);
+                    // type.GetMethod("SetIconForObject", BindingFlags.Static | BindingFlags.NonPublic);\
+                    type.GetMethod(
+                        "SetIconForObject",
+                        BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic,
+                        null,
+                        new[] { typeof(UnityEngine.Object), typeof(Texture2D) },
+                        null);
+            }
+            if (setIconForObjectMethodInfo == null)
+            {
+                Debug.LogError("SetIconForObject method not found");
+                return;
             }
             setIconForObjectMethodInfo.Invoke(null, new object[] { obj, icon });
         }
